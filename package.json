@@ -4,7 +4,8 @@
   "description": "How little do you need to build a front end in a thought out way",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js",
+    "dist": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server",
     "test": "jasmine"
   },
   "author": "Philip Kuryloski",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "jasmine": "^2.5.2",
-    "webpack": "^2.1.0-beta.27"
+    "webpack": "^2.1.0-beta.27",
+    "webpack-dev-server": "^2.1.0-beta.12"
   }
 }
