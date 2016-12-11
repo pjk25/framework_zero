@@ -4,8 +4,18 @@
   "description": "How little do you need to build a front end in a thought out way",
   "main": "index.js",
   "scripts": {
+    "start": "webpack --config webpack.config.js",
     "test": "jasmine"
   },
   "author": "Philip Kuryloski",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mori": "^0.3.2",
+    "rxjs": "^5.0.0-rc.5",
+    "virtual-dom": "^2.1.1"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "webpack": "^2.1.0-beta.27"
+  }
 }
