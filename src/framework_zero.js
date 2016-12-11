@@ -8,7 +8,14 @@ export function bootstrap(initial_state, render) {
   const events = new Rx.BehaviorSubject(m.identity);
 
   const appState = events.asObservable()
-    .scan((state, event) => event(state), initial_state);
+    .scan((state, event) => {
+      try {
+        return event(state);
+      } catch(error) {
+        console.log('Skipping failed app state update due to', error, 'raised by\n', event, '\nfor app state', m.toJs(state));
+        return state;
+      }
+    }, initial_state);
 
   appState.scan((uiState, appState) => {
     let newTree = render(appState);
