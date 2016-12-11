@@ -8,7 +8,7 @@ const initial_state = m.toClj({
   message: 'Framework Zero'
 });
 
-const eventSink = bootstrap(initial_state, render);
+const eventSink = bootstrap(initial_state, render, document.body);
 
 Rx.Observable.of((s) => m.updateIn(s, ['message'], (m) => m + '!'))
   .delay(1000)
