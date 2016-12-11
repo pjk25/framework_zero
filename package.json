@@ -1,0 +1,11 @@
+{
+  "name": "framework_zero",
+  "version": "0.1.0",
+  "description": "How little do you need to build a front end in a thought out way",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "Philip Kuryloski",
+  "license": "MIT"
+}
