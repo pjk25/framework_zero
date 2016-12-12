@@ -1,12 +1,20 @@
 import Rx from 'rxjs/Rx';
+import mainLoop from 'main-loop';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
 import createElement from 'virtual-dom/create-element';
+import m from 'mori';
 
-export function bootstrap(initial_state, render, container) {
-  const events = new Rx.BehaviorSubject((x) => x);
+export function events() {
+  const subject = new Rx.BehaviorSubject((x) => x);
+  return {
+    eventSource: subject.asObservable(),
+    eventSink: subject
+  }
+}
 
-  const appState = events.asObservable()
+export function bootstrap(initialState, events, render) {
+  const appState = events
     .scan((state, event) => {
       try {
         return event(state);
@@ -14,22 +22,26 @@ export function bootstrap(initial_state, render, container) {
         console.log('Skipping failed app state update due to', error, 'raised by\n', event, '\nfor app state', m.toJs(state));
         return state;
       }
-    }, initial_state);
+    }, initialState);
 
-  appState.scan(({tree, rootNode}, appState) => {
-    let newTree = render(appState);
-    if (!rootNode) {
-      rootNode = createElement(newTree);
-      container.appendChild(rootNode);
-    } else {
-      let patches = diff(tree, newTree);
-      rootNode = patch(rootNode, patches);
-    }
-    return {
-      tree: newTree,
-      rootNode: rootNode
-    }
-  }, {}).subscribe();
+  const loop = mainLoop(initialState, render, {
+    create: createElement,
+    diff: diff,
+    patch: patch
+  });
 
-  return events;
+  appState.subscribe(loop.update);
+
+  return loop.target;
 };
+
+export function memoize(render) {
+  let tree, state;
+  return function memoized(newState) {
+    if (newState !== state) {
+      state = newState;
+      tree = render(state);
+    }
+    return tree;
+  };
+}
