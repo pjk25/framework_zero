@@ -6,7 +6,8 @@ module.exports = {
   devtool: 'eval',
   module: {
     rules: [
-      require('./config/babel_rule')
+      require('./config/babel_rule'),
+      {test: /\.json$/, loader: 'json-loader'}
     ]
   }
 }

@@ -1,7 +1,7 @@
 import h from 'virtual-dom/h';
 import m from 'mori';
 
-export default (events) => (state) => {
+export default (dispatcher) => (state) => {
   return h('div', {
     style: {
       position: 'absolute',

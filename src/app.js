@@ -3,7 +3,6 @@ import m from 'mori';
 import Delegator from 'dom-delegator';
 import rootComponent from './root_component';
 import * as actions from './actions'
-
 import {bootstrap, events, memoize} from './framework_zero'
 
 const initial_state = m.toClj({
@@ -15,15 +14,14 @@ const initial_state = m.toClj({
   }
 });
 
-const {eventSource, eventSink} = events();
+const {sourceObservable, dispatcher} = events();
 
-const element = bootstrap(initial_state, eventSource, memoize(rootComponent(eventSink)));
+const element = bootstrap(initial_state, sourceObservable, memoize(rootComponent(dispatcher)));
 
 document.body.appendChild(element);
 
-const delegator = Delegator();
-delegator.listenTo('mousemove');
+Delegator(element).listenTo('mousemove');
 
 Rx.Observable.of(actions.updateMessage())
   .delay(1000)
-  .subscribe((action) => eventSink.next(action));
+  .subscribe(dispatcher);

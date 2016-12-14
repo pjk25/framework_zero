@@ -1,21 +1,22 @@
 import h from 'virtual-dom/h';
 import m from 'mori';
+import Rx from 'rxjs/Rx';
 import tooltip from './tooltip';
 import {memoize} from './framework_zero';
 import {updateTooltipPosition, hideTooltip} from './actions';
 
-let handle;
+export default (dispatcher, scheduler) => {
+  const tt = memoize(tooltip(dispatcher));
+  const hideSubject = new Rx.Subject();
 
-export default (events) => {
-  const tt = memoize(tooltip(events));
+  hideSubject
+    .subscribeOn(scheduler)
+    .debounceTime(1000)
+    .subscribe(dispatcher);
 
   function onMousemove(e) {
-    events.next(updateTooltipPosition(e.clientX, e.clientY));
-    if (handle) {
-      clearTimeout(handle);
-      handle = undefined;
-    }
-    handle = setTimeout(() => events.next(hideTooltip()), 1000);
+    dispatcher(updateTooltipPosition(e.clientX, e.clientY));
+    hideSubject.next(hideTooltip());
   }
 
   return (state) => {
