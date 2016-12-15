@@ -5,12 +5,11 @@ import tooltip from './tooltip';
 import {memoize} from './framework_zero';
 import {updateTooltipPosition, hideTooltip} from './actions';
 
-export default (dispatcher, scheduler) => {
+export default (dispatcher) => {
   const tt = memoize(tooltip(dispatcher));
   const hideSubject = new Rx.Subject();
 
   hideSubject
-    .subscribeOn(scheduler)
     .debounceTime(1000)
     .subscribe(dispatcher);
 
