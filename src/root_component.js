@@ -7,16 +7,19 @@ import {updateTooltipPosition, hideTooltip} from './actions';
 
 export default (dispatcher) => {
   const tt = memoize(tooltip(dispatcher));
+
   const hideSubject = new Rx.Subject();
 
   hideSubject
-    .debounceTime(1000)
+    .map(e => updateTooltipPosition(e.clientX, e.clientY))
     .subscribe(dispatcher);
 
-  function onMousemove(e) {
-    dispatcher(updateTooltipPosition(e.clientX, e.clientY));
-    hideSubject.next(hideTooltip());
-  }
+  hideSubject
+    .debounceTime(1000)
+    .map(() => hideTooltip())
+    .subscribe(dispatcher);
+
+  const onMousemove = hideSubject.next.bind(hideSubject);
 
   return (state) => {
     return h('div', {style: {height: '100%'}, 'ev-mousemove': onMousemove}, [
