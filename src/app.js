@@ -1,5 +1,5 @@
-import Rx from 'rxjs/Rx';
 import m from 'mori';
+import {Observable} from 'rxjs/Rx';
 import Delegator from 'dom-delegator';
 import rootComponent from './root_component';
 import * as actions from './actions'
@@ -22,6 +22,6 @@ document.body.appendChild(element);
 
 Delegator(element).listenTo('mousemove');
 
-Rx.Observable.of(actions.updateMessage())
+Observable.of(actions.updateMessage())
   .delay(1000)
   .subscribe(dispatcher);

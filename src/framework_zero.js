@@ -1,4 +1,4 @@
-import Rx from 'rxjs/Rx';
+import {BehaviorSubject} from 'rxjs/Rx';
 import mainLoop from 'main-loop';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
@@ -6,7 +6,7 @@ import createElement from 'virtual-dom/create-element';
 import m from 'mori';
 
 export function events() {
-  const subject = new Rx.BehaviorSubject((x) => x);
+  const subject = new BehaviorSubject((x) => x);
   return {
     sourceObservable: subject.asObservable(),
     dispatcher: subject.next.bind(subject)
@@ -14,8 +14,6 @@ export function events() {
 }
 
 export function bootstrap(initialState, events, render) {
-  const subject = new Rx.BehaviorSubject((x) => x);
-
   const loop = mainLoop(initialState, render, {
     create: createElement,
     diff: diff,

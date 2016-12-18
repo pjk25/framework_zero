@@ -1,21 +1,21 @@
 import h from 'virtual-dom/h';
 import m from 'mori';
-import Rx from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 import tooltip from './tooltip';
 import {memoize} from './framework_zero';
 import {updateTooltipPosition, hideTooltip} from './actions';
 
-export default (dispatcher) => {
+export default (dispatcher, scheduler) => {
   const tt = memoize(tooltip(dispatcher));
 
-  const hideSubject = new Rx.Subject();
+  const hideSubject = new Subject();
 
   hideSubject
     .map(e => updateTooltipPosition(e.clientX, e.clientY))
     .subscribe(dispatcher);
 
   hideSubject
-    .debounceTime(1000)
+    .debounceTime(1000, scheduler)
     .map(() => hideTooltip())
     .subscribe(dispatcher);
 

@@ -1,5 +1,5 @@
 import m from 'mori';
-import Rx from 'rxjs/Rx';
+import {Subject, TestScheduler} from 'rxjs/Rx';
 import Delegator from 'dom-delegator';
 import DOMEvent from 'synthetic-dom-events';
 import createElement from 'virtual-dom/create-element';
@@ -7,11 +7,12 @@ import rootComponent from '../src/root_component';
 
 describe('RootComponent', () => {
   beforeEach(() => {
-    this.subject = new Rx.Subject();
+    this.scheduler = new FakeScheduler();
+    this.subject = new Subject();
     const dispatcher = this.subject.next.bind(this.subject);
 
     this.state = m.hashMap('message', 'Framework Zero');
-    this.tree = rootComponent(dispatcher)(this.state);
+    this.tree = rootComponent(dispatcher, this.scheduler)(this.state);
     this.element = createElement(this.tree);
 
     document.body.appendChild(this.element);
@@ -48,4 +49,52 @@ describe('RootComponent', () => {
       clientY: 19
     }));
   });
+
+  it('should hide the tooltip after one second', (done) => {
+    this.subject.skip(1).subscribe((action) => {
+      expect(m.toJs(action(this.state))).toEqual({
+        message: 'Framework Zero',
+        tooltip: {
+          visible: false
+        }
+      });
+      done();
+    }, done.fail);
+
+    this.element.dispatchEvent(DOMEvent('mousemove', {
+      bubbles: true,
+      clientX: 10,
+      clientY: 19
+    }));
+
+    this.scheduler.advanceBy(1000);
+  });
 });
+
+function FakeScheduler(epoch = 0) {
+  function FakeSubscription() {
+    this.unsubscribe = function unsubscribe() {};
+  }
+
+  this.epoch = epoch;
+  this.work = [];
+  this.schedule = function schedule(work, delay, state) {
+    this.work = this.work
+      .concat({work: work, delay: delay, state: state})
+      .sort((l, r) => r.delay - l.delay);
+    return new FakeSubscription();
+  },
+  this.advanceBy = function advanceBy(time) {
+    for (let key in this.work) {
+      if (this.work.hasOwnProperty(key)) {
+        let job = this.work[key];
+        if (!job.done && job.delay <= time) {
+          job.work(job.state);
+          job.done = true;
+        }
+        job.delay = job.delay - time;
+      }
+    }
+    this.epoch = this.epoch + time;
+  }
+}
