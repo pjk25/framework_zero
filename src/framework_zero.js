@@ -3,17 +3,16 @@ import mainLoop from 'main-loop';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
 import createElement from 'virtual-dom/create-element';
-import m from 'mori';
 
 export function events() {
-  const subject = new BehaviorSubject((x) => x);
+  const subject = new BehaviorSubject(x => x);
   return {
     sourceObservable: subject.asObservable(),
     dispatcher: subject.next.bind(subject)
   }
 }
 
-export function bootstrap(initialState, events, render) {
+export function bootstrap(initialState, events, render, onError = state => state) {
   const loop = mainLoop(initialState, render, {
     create: createElement,
     diff: diff,
@@ -25,10 +24,7 @@ export function bootstrap(initialState, events, render) {
       try {
         return event(state);
       } catch(error) {
-        console.log(
-          'Skipping failed app state update due to', error,
-          'raised by\n', event, '\nfor app state', m.toJs(state));
-        return state;
+        return onError(state, event, error);
       }
     }, initialState);
 
