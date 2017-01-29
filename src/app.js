@@ -14,10 +14,9 @@ const initial_state = m.toClj({
   }
 });
 
-const {sourceObservable, dispatcher} = events();
-
-const element = bootstrap(
-  initial_state, sourceObservable, memoize(rootComponent(dispatcher)),
+const {element, dispatcher} = bootstrap(
+  initial_state,
+  dispatcher => memoize(rootComponent(dispatcher)),
   (state, event, error) => {
     console.log(
       'Skipping failed app state update due to', error,

@@ -4,22 +4,27 @@ import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
 import createElement from 'virtual-dom/create-element';
 
-export function events() {
-  const subject = new BehaviorSubject(x => x);
-  return {
-    sourceObservable: subject.asObservable(),
-    dispatcher: subject.next.bind(subject)
+export function bootstrap(initialState, makeRenderer, onError = state => state) {
+  if (!initialState) {
+    throw 'initialState must be defined';
   }
-}
+  if (!makeRenderer) {
+    throw 'makeRenderer must be defined';
+  }
 
-export function bootstrap(initialState, events, render, onError = state => state) {
+  const subject = new BehaviorSubject(x => x);
+  const dispatcher = subject.next.bind(subject);
+
+  const render = makeRenderer(dispatcher);
+
   const loop = mainLoop(initialState, render, {
     create: createElement,
     diff: diff,
     patch: patch
   });
 
-  const appState = events
+  const appState = subject
+    .asObservable()
     .scan((state, event) => {
       try {
         return event(state);
@@ -30,7 +35,10 @@ export function bootstrap(initialState, events, render, onError = state => state
 
   appState.subscribe(loop.update);
 
-  return loop.target;
+  return {
+    element: loop.target,
+    dispatcher: dispatcher
+   };
 };
 
 export function memoize(render) {
