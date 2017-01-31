@@ -1,4 +1,3 @@
-import {BehaviorSubject} from 'rxjs/Rx';
 import mainLoop from 'main-loop';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
@@ -12,9 +11,6 @@ export function bootstrap(initialState, makeRenderer, onError = state => state) 
     throw 'makeRenderer must be defined';
   }
 
-  const subject = new BehaviorSubject(x => x);
-  const dispatcher = subject.next.bind(subject);
-
   const render = makeRenderer(dispatcher);
 
   const loop = mainLoop(initialState, render, {
@@ -23,17 +19,17 @@ export function bootstrap(initialState, makeRenderer, onError = state => state) 
     patch: patch
   });
 
-  const appState = subject
-    .asObservable()
-    .scan((state, event) => {
-      try {
-        return event(state);
-      } catch(error) {
-        return onError(state, event, error);
-      }
-    }, initialState);
+  let state = initialState;
 
-  appState.subscribe(loop.update);
+  function dispatcher(action) {
+    try {
+      state = action(state);
+    } catch (error) {
+      state = onError(state, action, error);
+    } finally {
+      loop.update(state);
+    }
+  }
 
   return {
     element: loop.target,
