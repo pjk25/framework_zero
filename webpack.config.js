@@ -1,12 +1,14 @@
 module.exports = {
-  entry: ['babel-polyfill', './src/app.js'],
+  entry: ['babel-polyfill', './spec/'],
   output: {
     filename: 'bundle.js'
   },
   devtool: 'eval',
   module: {
-    rules: [
-      require('./config/babel_rule')
-    ]
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    }]
   }
-}
+};

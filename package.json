@@ -1,33 +1,29 @@
 {
   "name": "framework_zero",
   "version": "0.1.0",
-  "description": "How little do you need to build a front end in a thought out way",
-  "main": "index.js",
+  "description": "Not exactly a framework, enough to get started",
+  "files": ["LICENSE", "README.md"],
+  "main": "src/framework_zero.js",
   "scripts": {
-    "dist": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server",
-    "test": "webpack-dev-server --config webpack.spec.config.js --port 8888"
+    "prepublish": "dist-es6",
+    "test": "webpack-dev-server --port 8888"
   },
   "author": "Philip Kuryloski",
   "license": "MIT",
   "dependencies": {
-    "dom-delegator": "^13.1.0",
     "main-loop": "^3.4.0",
-    "mori": "^0.3.2",
-    "rxjs": "^5.0.0-rc.5",
     "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
-    "babel-core": "^6.20.0",
-    "babel-loader": "^6.2.9",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-es2015": "^6.18.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
     "css-loader": "^0.26.1",
+    "dist-es6": "^0.2.5",
     "jasmine-core": "^2.5.2",
-    "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",
-    "synthetic-dom-events": "git://github.com/Raynos/synthetic-dom-events.git",
-    "webpack": "^2.1.0-beta.27",
-    "webpack-dev-server": "^2.1.0-beta.12"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.1"
   }
 }
