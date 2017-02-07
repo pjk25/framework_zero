@@ -2,27 +2,28 @@
   "name": "framework_zero",
   "version": "0.1.0",
   "description": "Not exactly a framework, enough to get started",
-  "files": ["LICENSE", "README.md"],
   "main": "src/framework_zero.js",
   "scripts": {
-    "prepublish": "dist-es6",
-    "test": "webpack-dev-server --port 8888"
+    "prebuild": "rimraf lib",
+    "build": "tsc -p src",
+    "watch": "tsc -p src --watch",
+    "test": "echo ?",
+    "test-watch": "webpack-dev-server --port 8888"
   },
   "author": "Philip Kuryloski",
   "license": "MIT",
   "dependencies": {
+    "@types/virtual-dom": "^2.0.27",
     "main-loop": "^3.4.0",
     "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-polyfill": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0",
+    "awesome-typescript-loader": "^3.0.0-beta.18",
     "css-loader": "^0.26.1",
-    "dist-es6": "^0.2.5",
     "jasmine-core": "^2.5.2",
+    "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
+    "typescript": "^2.1.5",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.2.1"
   }

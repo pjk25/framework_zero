@@ -1,14 +1,16 @@
 module.exports = {
-  entry: ['babel-polyfill', './spec/'],
-  output: {
-    filename: 'bundle.js'
-  },
-  devtool: 'eval',
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }]
-  }
+    entry: './spec/',
+    output: {
+        filename: 'spec.js'
+    },
+    devtool: 'eval',
+    resolve: {
+        extensions: ['.js', '.ts']
+    },
+    module: {
+        rules: [{
+            test: /\.ts$/,
+            loader: 'awesome-typescript-loader'
+        }]
+    }
 };

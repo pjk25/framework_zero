@@ -1,5 +1,4 @@
-import createElement from 'virtual-dom/create-element';
-import h from 'virtual-dom/h';
+import {create, h} from 'virtual-dom';
 import {bootstrap, memoize} from '../src/framework_zero';
 
 describe('FrameworkZero', () => {
@@ -13,14 +12,14 @@ describe('FrameworkZero', () => {
     });
 
     it('renders the initial state', () => {
-      expect(this.element).toEqual(createElement(h('div', 'hi')));
+      expect(this.element).toEqual(create(h('div', 'hi')));
     });
 
     it('renders the updated data on dispatch', (done) => {
-      this.dispatcher(s => { return {message: 'alice'}; });
+      this.dispatcher(() => { return {message: 'alice'}; });
 
       setTimeout(() => {
-        expect(this.element).toEqual(createElement(h('div', 'alice')));
+        expect(this.element).toEqual(create(h('div', 'alice')));
         done();
       }, 0);
     });

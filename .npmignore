@@ -1,5 +1,5 @@
 .DS_Store
 .idea/
-/lib/
+/src/
 /node_modules/
 /bundle.js
