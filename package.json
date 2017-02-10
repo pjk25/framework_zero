@@ -2,13 +2,12 @@
   "name": "framework_zero",
   "version": "0.1.0",
   "description": "Not exactly a framework, enough to get started",
-  "main": "src/framework_zero.js",
+  "main": "framework_zero.js",
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "tsc -p src",
     "watch": "tsc -p src --watch",
-    "test": "echo ?",
-    "test-watch": "webpack-dev-server --port 8888"
+    "test": "webpack-dev-server --port 8888"
   },
   "author": "Philip Kuryloski",
   "license": "MIT",
