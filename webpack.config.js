@@ -1,16 +1,18 @@
+const path = require('path');
+
 module.exports = {
-    entry: './spec/',
+    entry: './spec/index.js',
     output: {
-        filename: 'spec.js'
+        filename: 'spec.js',
+        path: path.resolve(__dirname, './dist')
     },
-    devtool: 'eval',
     resolve: {
         extensions: ['.js', '.ts']
     },
     module: {
         rules: [{
             test: /\.ts$/,
-            loader: 'awesome-typescript-loader'
+            loader: 'ts-loader'
         }]
     }
 };
