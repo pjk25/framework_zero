@@ -11,8 +11,8 @@ export default (dispatcher) => (state) => {
             height: '50px',
             'line-height': '50px',
             'text-align': 'center',
-            left: m.getIn(state, ['position', 'x']),
-            top: m.getIn(state, ['position', 'y']),
+            left: m.getIn(state, ['position', 'x']) + 'px',
+            top: m.getIn(state, ['position', 'y']) + 'px',
             opacity: m.get(state, 'visible') ? '1' : '0',
             transition: 'opacity 1s'
         }

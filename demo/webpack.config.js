@@ -1,12 +1,5 @@
-module.exports = {
-    entry: ['babel-polyfill', './src/app.js'],
-    output: {
-        filename: 'bundle.js'
-    },
-    devtool: 'eval',
-    module: {
-        rules: [
-            require('./config/babel_rule')
-        ]
-    }
-};
+const webpackMerge = require('webpack-merge');
+
+module.exports = webpackMerge(require('./config/webpack.common.config'), {
+    entry: ['babel-polyfill', './src/app.js']
+});

@@ -22,7 +22,7 @@ export default (dispatcher, scheduler) => {
     const onMousemove = hideSubject.next.bind(hideSubject);
 
     return (state) => {
-        return h('div', {style: {height: '100%'}, 'ev-mousemove': onMousemove}, [
+        return h('div', {style: {height: '100vh'}, 'ev-mousemove': onMousemove}, [
             h('p', {}, [m.get(state, 'message')]),
             tt(m.get(state, 'tooltip'))
         ]);
