@@ -1,9 +1,9 @@
-import m from 'mori';
-import {Subject, TestScheduler} from 'rxjs/Rx';
-import Delegator from 'dom-delegator';
-import DOMEvent from 'synthetic-dom-events';
-import createElement from 'virtual-dom/create-element';
-import rootComponent from '../src/root_component';
+import m from "mori";
+import {Subject} from "rxjs/Rx";
+import Delegator from "dom-delegator";
+import DOMEvent from "synthetic-dom-events";
+import createElement from "virtual-dom/create-element";
+import rootComponent from "../src/root_component";
 
 describe('RootComponent', () => {
   beforeEach(() => {
