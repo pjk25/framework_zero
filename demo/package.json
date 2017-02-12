@@ -4,7 +4,6 @@
   "description": "Sample app using framework_zero and mori",
   "private": true,
   "scripts": {
-    "prepare": "cd .. && npm run build && npm link && cd demo && npm link framework_zero",
     "dist": "webpack",
     "start": "webpack-dev-server",
     "test": "webpack-dev-server --config webpack.spec.config.js --port 8888"

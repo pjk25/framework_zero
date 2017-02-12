@@ -26,3 +26,11 @@ functions used with immutable data structures.
 2. Optimize a render function by caching the virtual dom
 
         function memoize<T>(render: Renderer<T>): Renderer<T>;
+
+## Demo
+
+1. `npm build`
+2. `npm link`
+3. `cd demo`
+4. `npm link framework_zero`
+5. `npm start`
