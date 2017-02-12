@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './spec/index.js',
@@ -14,5 +15,6 @@ module.exports = {
             test: /\.ts$/,
             loader: 'ts-loader'
         }]
-    }
+    },
+    plugins: [new HtmlWebpackPlugin()]
 };
