@@ -12,7 +12,13 @@ module.exports = {
     module: {
         rules: [{
             test: /\.ts$/,
-            loader: 'ts-loader'
+            loader: 'ts-loader',
+            options: {
+                compilerOptions: {
+                    target: 'ES5',
+                    declaration: false
+                }
+            }
         }]
     }
 };
