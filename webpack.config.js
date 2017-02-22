@@ -10,15 +10,23 @@ module.exports = {
         extensions: ['.js', '.ts']
     },
     module: {
-        rules: [{
-            test: /\.ts$/,
-            loader: 'ts-loader',
-            options: {
-                compilerOptions: {
-                    target: 'ES5',
-                    declaration: false
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                options: {
+                    compilerOptions: {
+                        target: 'ES5',
+                        declaration: false,
+                        sourceMap: false
+                    }
                 }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             }
-        }]
+        ]
     }
 };
