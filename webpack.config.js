@@ -13,14 +13,18 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                loader: 'ts-loader',
-                options: {
-                    compilerOptions: {
-                        target: 'ES5',
-                        declaration: false,
-                        sourceMap: false
+                use: [
+                    {loader: 'babel-loader'},
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            compilerOptions: {
+                                declaration: false,
+                                sourceMap: false
+                            }
+                        }
                     }
-                }
+                ]
             },
             {
                 test: /\.js$/,
