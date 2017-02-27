@@ -29,10 +29,10 @@ functions used with immutable data structures.
 
 ## Demo
 
-In order to run the demo against the local framework_zero:
+In order to run the mori demo against the local framework_zero:
 
 1. `npm build`
 2. `npm link`
-3. `cd demo`
+3. `cd demos/mori`
 4. `npm link framework_zero`
 5. `npm start`
