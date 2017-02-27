@@ -2,6 +2,7 @@
   "name": "framework_zero",
   "version": "0.1.0",
   "description": "Not exactly a framework, enough to get started",
+  "repository": "pjk25/framework_zero",
   "main": "framework_zero.js",
   "scripts": {
     "prebuild": "rimraf lib",
