@@ -1,4 +1,4 @@
-# framework_zero
+# framework_zero [![Build Status](https://travis-ci.org/pjk25/framework_zero.svg?branch=master)](https://travis-ci.org/pjk25/framework_zero)
 
 Not so much a framework, but @raynos main-loop hooked up to virtual-dom, and a helper function to optimize pure render
 functions used with immutable data structures.
