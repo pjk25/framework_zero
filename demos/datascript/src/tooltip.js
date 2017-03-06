@@ -3,15 +3,13 @@ import h from "virtual-dom/h";
 
 const d = datascript.core;
 
-export default (dispatcher) => (state) => {
-
-    const [id] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e :where [?e "tooltip/message" ?m]]'), state)));
+export default (dispatcher, tooltipId) => (state) => {
 
     const data = d.pull(state, mori.parse('[' +
         '"tooltip/message" ' +
         '"tooltip/visible" ' +
         '{"tooltip/position" ["position/x" "position/y"]}' +
-        ']'), id);
+        ']'), tooltipId);
 
     return h('div', {
         style: {

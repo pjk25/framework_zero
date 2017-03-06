@@ -6,8 +6,8 @@ import {updateTooltipPosition, hideTooltip} from "./actions";
 
 const d = datascript.core;
 
-export default (dispatcher, scheduler) => {
-    const tt = tooltip(dispatcher);
+export default (dispatcher, messageId, tooltipId, scheduler) => {
+    const tt = tooltip(dispatcher, tooltipId);
 
     const hideSubject = new Subject();
 
@@ -23,10 +23,9 @@ export default (dispatcher, scheduler) => {
     const onMousemove = hideSubject.next.bind(hideSubject);
 
     return (state) => {
-        const [message] = mori.toJs(mori.first(d.q(mori.parse('[:find ?m :where [?e "message" ?m]]'), state)));
-
+        const data = d.pull(state, mori.parse('["message"]'), messageId);
         return h('div', {style: {height: '100vh'}, 'ev-mousemove': onMousemove}, [
-            h('p', {}, [message]),
+            h('p', {}, [mori.get(data, 'message')]),
             tt(state)
         ]);
     }

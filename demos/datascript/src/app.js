@@ -26,9 +26,12 @@ const initialState = d.db_with(db, vector(
     )
 ));
 
+const [messageId] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e :where [?e "message" ?m]]'), initialState)));
+const [tooltipId] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e :where [?e "tooltip/message" ?m]]'), initialState)));
+
 const {element, dispatcher} = bootstrap(
     initialState,
-    dispatcher => rootComponent(dispatcher),
+    dispatcher => rootComponent(dispatcher, messageId, tooltipId),
     (state, event, error) => {
         console.log(
             'Skipping failed app state update due to', error);
