@@ -5,11 +5,7 @@ const d = datascript.core;
 
 export default (dispatcher, tooltipId) => (state) => {
 
-    const data = d.pull(state, mori.parse('[' +
-        '"tooltip/message" ' +
-        '"tooltip/visible" ' +
-        '{"tooltip/position" ["position/x" "position/y"]}' +
-        ']'), tooltipId);
+    const data = d.pull(state, Datalog.Pull`["tooltip/message" "tooltip/visible" {"tooltip/position" ["position/x" "position/y"]}]`, tooltipId);
 
     return h('div', {
         style: {

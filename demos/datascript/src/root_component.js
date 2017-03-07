@@ -23,7 +23,7 @@ export default (dispatcher, messageId, tooltipId, scheduler) => {
     const onMousemove = hideSubject.next.bind(hideSubject);
 
     return (state) => {
-        const data = d.pull(state, mori.parse('["message"]'), messageId);
+        const data = d.pull(state, Datalog.Pull`["message"]`, messageId);
         return h('div', {style: {height: '100vh'}, 'ev-mousemove': onMousemove}, [
             h('p', {}, [mori.get(data, 'message')]),
             tt(state)

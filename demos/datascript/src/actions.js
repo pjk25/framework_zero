@@ -4,7 +4,7 @@ const d = datascript.core;
 const {DB_ID} = helpers;
 
 export const updateMessage = () => (s) => {
-    const [e, m] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e ?m :where [?e "message" ?m]]'), s)));
+    const [e, m] = mori.toJs(mori.first(d.q(Datalog.Q`[:find ?e ?m :where [?e "message" ?m]]`, s)));
 
     return d.db_with(s, mori.vector(
         mori.hashMap(
@@ -15,7 +15,7 @@ export const updateMessage = () => (s) => {
 };
 
 export const updateTooltipPosition = (x, y) => (s) => {
-    const [t, p] = mori.toJs(mori.first(d.q(mori.parse('[:find ?t ?p :where [?t "tooltip/position" ?p]]'), s)));
+    const [t, p] = mori.toJs(mori.first(d.q(Datalog.Q`[:find ?t ?p :where [?t "tooltip/position" ?p]]`, s)));
 
     return d.db_with(s, mori.vector(
         mori.hashMap(
@@ -31,7 +31,7 @@ export const updateTooltipPosition = (x, y) => (s) => {
 };
 
 export const hideTooltip = () => (s) => {
-    const [t] = mori.toJs(mori.first(d.q(mori.parse('[:find ?t :where [?t "tooltip/position" ?p]]'), s)));
+    const t = mori.first(mori.first(d.q(Datalog.Q`[:find ?t :where [?t "tooltip/position" ?p]]`, s)));
 
     return d.db_with(s, mori.vector(
         mori.hashMap(

@@ -35,8 +35,8 @@ describe('RootComponent', () => {
             )
         ));
 
-        const [messageId] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e :where [?e "message" ?m]]'), this.state)));
-        const [tooltipId] = mori.toJs(mori.first(d.q(mori.parse('[:find ?e :where [?e "tooltip/message" ?m]]'), this.state)));
+        const messageId = mori.first(mori.first(d.q(Datalog.Q`[:find ?e :where [?e "message" ?m]]`, this.state)));
+        const tooltipId = mori.first(mori.first(d.q(Datalog.Q`[:find ?e :where [?e "tooltip/message" ?m]]`, this.state)));
 
         this.tree = rootComponent(dispatcher, messageId, tooltipId, this.scheduler)(this.state);
         this.element = createElement(this.tree);
