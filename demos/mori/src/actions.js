@@ -15,3 +15,11 @@ export const updateTooltipPosition = (x, y) => (s) => {
 export const hideTooltip = () => (s) => {
     return m.assocIn(s, ['tooltip', 'visible'], false);
 };
+
+export const touch = (i) => (s) => {
+    return m.assocIn(s, ['blocks', i], true);
+};
+
+export const untouch = (i) => (s) => {
+    return m.assocIn(s, ['blocks', i], false);
+};

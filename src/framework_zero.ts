@@ -1,5 +1,5 @@
-import * as mainLoop from 'main-loop';
-import {diff, patch, create} from 'virtual-dom';
+import * as mainLoop from "main-loop";
+import {create, diff, patch} from "virtual-dom";
 
 export type Action<T> = (state: T) => T;
 export type Dispatcher<T> = (action: Action<T>) => void;
@@ -31,16 +31,5 @@ export function bootstrap<T>(initialState: T, makeRenderer: RendererFactory<T>, 
     return {
         element: loop.target,
         dispatcher: dispatcher
-    };
-}
-
-export function memoize<T>(render: Renderer<T>): Renderer<T> {
-    let tree, state;
-    return newState => {
-        if (newState !== state) {
-            state = newState;
-            tree = render(state);
-        }
-        return tree;
     };
 }

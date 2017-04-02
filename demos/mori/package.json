@@ -14,7 +14,8 @@
     "dom-delegator": "^13.1.0",
     "framework_zero": "^0.1.0",
     "mori": "^0.3.2",
-    "rxjs": "^5.0.0-rc.5"
+    "rxjs": "^5.0.0-rc.5",
+    "vdom-thunk": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",

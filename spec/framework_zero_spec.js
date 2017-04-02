@@ -1,5 +1,5 @@
-import {create, h} from 'virtual-dom';
-import {bootstrap, memoize} from '../src/framework_zero';
+import {create, h} from "virtual-dom";
+import {bootstrap} from "../src/framework_zero";
 
 describe('FrameworkZero', () => {
   describe('bootstrap', () => {
@@ -22,26 +22,6 @@ describe('FrameworkZero', () => {
         expect(this.element).toEqual(create(h('div', 'alice')));
         done();
       }, 0);
-    });
-  });
-
-  describe('memoize', () => {
-    beforeEach(() => {
-      this.render = s => { return {p: s}; };
-      this.memoized = memoize(this.render);
-    });
-
-    it('returns the same thing for the same inputs', () => {
-      expect(this.render('hi')).not.toBe(this.render('hi'));
-      expect(this.memoized('hi')).toBe(this.memoized('hi'));
-    });
-
-    it('returns updated thing for new inputs', () => {
-      const hi = this.memoized('hi');
-      expect(hi).toEqual(this.render('hi'));
-      const bob = this.memoized('bob');
-      expect(bob).not.toBe(hi);
-      expect(bob).toEqual(this.render('bob'));
     });
   });
 });

@@ -3,7 +3,7 @@ import {Observable} from "rxjs/Rx";
 import Delegator from "dom-delegator";
 import rootComponent from "./root_component";
 import * as actions from "./actions";
-import {bootstrap, memoize} from "framework_zero";
+import {bootstrap} from "framework_zero";
 
 const initial_state = m.toClj({
     message: 'Framework Zero',
@@ -11,12 +11,13 @@ const initial_state = m.toClj({
         position: {x: 0, y: 0},
         visible: false,
         message: 'This is a tooltip'
-    }
+    },
+    blocks: new Array(1600).fill(false)
 });
 
 const {element, dispatcher} = bootstrap(
     initial_state,
-    dispatcher => memoize(rootComponent(dispatcher)),
+    rootComponent,
     (state, event, error) => {
         console.log(
             'Skipping failed app state update due to', error,
