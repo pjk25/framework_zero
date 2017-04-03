@@ -1,6 +1,7 @@
 import h from "virtual-dom/h";
 import m from "mori";
-import partial from "vdom-thunk";
+import Thunk from "vdom-thunk/immutable-thunk";
+import shallowEq from "vdom-thunk/shallow-eq";
 import {Subject} from "rxjs/Rx";
 import tooltip from "./tooltip";
 import matrix from "./matrix";
@@ -23,11 +24,11 @@ export default (dispatcher, scheduler) => {
 
     const onMousemove = hideSubject.next.bind(hideSubject);
 
-    return (state) => {
+    return state => {
         return h('div', {style: {height: '100vh'}, 'ev-mousemove': onMousemove}, [
             h('p', {}, [m.get(state, 'message')]),
-            partial(tt, m.get(state, 'tooltip')),
-            partial(mtx, m.get(state, 'blocks'))
+            new Thunk(tt, [m.get(state, 'tooltip')], 'tooltip', shallowEq),
+            new Thunk(mtx, [m.get(state, 'blocks')], 'blocks', shallowEq)
         ]);
     }
 }
