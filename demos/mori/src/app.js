@@ -5,6 +5,9 @@ import rootComponent from "./root_component";
 import * as actions from "./actions";
 import {bootstrap} from "framework_zero";
 
+const CELLS_PER_GROUP = 100;
+const GROUPS_PER_MATRIX = 16;
+
 const initial_state = m.toClj({
     message: 'Framework Zero',
     tooltip: {
@@ -12,12 +15,12 @@ const initial_state = m.toClj({
         visible: false,
         message: 'This is a tooltip'
     },
-    blocks: new Array(1600).fill(false)
+    blocks: new Array(GROUPS_PER_MATRIX).fill(new Array(CELLS_PER_GROUP).fill(false))
 });
 
 const {element, dispatcher} = bootstrap(
     initial_state,
-    rootComponent,
+    rootComponent(CELLS_PER_GROUP, GROUPS_PER_MATRIX),
     (state, event, error) => {
         console.log(
             'Skipping failed app state update due to', error,
@@ -31,5 +34,5 @@ document.body.appendChild(element);
 Delegator(element).listenTo('mousemove');
 
 Observable.of(actions.updateMessage())
-    .delay(1000)
+    .delay(2000)
     .subscribe(dispatcher);

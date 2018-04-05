@@ -7,9 +7,9 @@ import tooltip from "./tooltip";
 import matrix from "./matrix";
 import {hideTooltip, updateTooltipPosition} from "./actions";
 
-export default (dispatcher, scheduler) => {
+export default (cellsPerGroup, groupsPerMatrix) => (dispatcher, scheduler) => {
     const tt = tooltip(dispatcher, scheduler);
-    const mtx = matrix(dispatcher, scheduler);
+    const mtx = matrix(dispatcher, scheduler, cellsPerGroup, groupsPerMatrix);
 
     const hideSubject = new Subject();
 

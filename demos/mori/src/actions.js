@@ -16,10 +16,10 @@ export const hideTooltip = () => (s) => {
     return m.assocIn(s, ['tooltip', 'visible'], false);
 };
 
-export const touch = (i) => (s) => {
-    return m.assocIn(s, ['blocks', i], true);
+export const touch = (i, j) => (s) => {
+    return m.assocIn(s, ['blocks', i, j], true);
 };
 
-export const untouch = (i) => (s) => {
-    return m.assocIn(s, ['blocks', i], false);
+export const untouch = (i, j) => (s) => {
+    return m.assocIn(s, ['blocks', i, j], false);
 };
